@@ -25,7 +25,6 @@
       this.video = document.createElement('video');
       this.video.setAttribute("loop", "");
 
-      // Append nosleep video sources
       addSourceToVideo(this.video, "webm", media.WebM);
       addSourceToVideo(this.video, "mp4", media.MP4);
     }
@@ -35,7 +34,6 @@
       this.video = document.createElement('video');
       this.video.setAttribute("loop", "");
 
-      // Append nosleep video sources
       addSourceToVideo(this.video, "webm", media.WebM);
       addSourceToVideo(this.video, "mp4", media.MP4);
     }
@@ -43,7 +41,7 @@
     return this;
   };
 
-  NoSleep.prototype.enable = function(duration) {
+  disableScreenBlock.prototype.enable = function(duration) {
     if (agent.isiOS) {
       this.disable();
       this.noSleepTimer = window.setInterval(function() {
@@ -59,8 +57,8 @@
     }
   };
 
-  // Disable NoSleep instance
-  NoSleep.prototype.disable = function() {
+
+  disableScreenBlock.prototype.disable = function() {
     if (agent.isiOS) {
       if (this.noSleepTimer) {
         window.clearInterval(this.noSleepTimer);
@@ -75,6 +73,5 @@
     }
   };
 
-  // Append NoSleep API to root object
-  root.NoSleep = NoSleep;
+  root.disableScreenBlock = disableScreenBlock;
 })(this);
