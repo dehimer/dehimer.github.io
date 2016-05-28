@@ -1,13 +1,8 @@
-/**
- * NoSleep.js v0.5.0 - git.io/vfn01
- * Rich Tibbett
- * MIT license
- **/
 (function(root) {
-  // UA matching
-  var ua = {
-    Android: /Android/ig.test(navigator.userAgent),
-    iOS: /AppleWebKit/.test(navigator.userAgent) && /Mobile\/\w+/.test(navigator.userAgent)
+
+  var agent = {
+    isAndroid: /Android/ig.test(navigator.userAgent),
+    isiOS: /AppleWebKit/.test(navigator.userAgent) && /Mobile\/\w+/.test(navigator.userAgent)
   };
 
   var media = {
@@ -22,63 +17,61 @@
     element.appendChild(source);
   }
 
-  // NoSleep instance constructor
-  var NoSleep = function() {
-    if (ua.iOS) {
+  var DisableBlock = function() {
+    if (agent.isiOS) {
       this.noSleepTimer = null;
-    } else if (ua.Android) {
+    } else if (agent.isAndroid) {
       // Set up no sleep video element
-      this.noSleepVideo = document.createElement('video');
-      this.noSleepVideo.setAttribute("loop", "");
+      this.video = document.createElement('video');
+      this.video.setAttribute("loop", "");
 
       // Append nosleep video sources
-      addSourceToVideo(this.noSleepVideo, "webm", media.WebM);
-      addSourceToVideo(this.noSleepVideo, "mp4", media.MP4);
+      addSourceToVideo(this.video, "webm", media.WebM);
+      addSourceToVideo(this.video, "mp4", media.MP4);
     }
     else
     {
       // Set up no sleep video element
-      this.noSleepVideo = document.createElement('video');
-      this.noSleepVideo.setAttribute("loop", "");
+      this.video = document.createElement('video');
+      this.video.setAttribute("loop", "");
 
       // Append nosleep video sources
-      addSourceToVideo(this.noSleepVideo, "webm", media.WebM);
-      addSourceToVideo(this.noSleepVideo, "mp4", media.MP4);
+      addSourceToVideo(this.video, "webm", media.WebM);
+      addSourceToVideo(this.video, "mp4", media.MP4);
     }
 
     return this;
   };
 
-  // Enable NoSleep instance
   NoSleep.prototype.enable = function(duration) {
-    if (ua.iOS) {
+    if (agent.isiOS) {
       this.disable();
       this.noSleepTimer = window.setInterval(function() {
         window.location.href = '/';
         window.setTimeout(window.stop, 0);
       }, duration || 15000);
-    } else if (ua.Android) {
-      this.noSleepVideo.play();
+    } else if (agent.isAndroid) {
+      this.video.play();
     }
     else
     {
-      this.noSleepVideo.play();
+      this.video.play();
     }
   };
 
   // Disable NoSleep instance
   NoSleep.prototype.disable = function() {
-    if (ua.iOS) {
+    if (agent.isiOS) {
       if (this.noSleepTimer) {
         window.clearInterval(this.noSleepTimer);
         this.noSleepTimer = null;
       }
-    } else if (ua.Android) {
-      this.noSleepVideo.pause();
+    } else if (agent.isAndroid) {
+      this.video.pause();
     }
     else
     {
-      this.noSleepVideo.pause();
+      this.video.pause();
     }
   };
 
