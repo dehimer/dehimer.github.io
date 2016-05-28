@@ -35,6 +35,16 @@
       addSourceToVideo(this.noSleepVideo, "webm", media.WebM);
       addSourceToVideo(this.noSleepVideo, "mp4", media.MP4);
     }
+    else
+    {
+      // Set up no sleep video element
+      this.noSleepVideo = document.createElement('video');
+      this.noSleepVideo.setAttribute("loop", "");
+
+      // Append nosleep video sources
+      addSourceToVideo(this.noSleepVideo, "webm", media.WebM);
+      addSourceToVideo(this.noSleepVideo, "mp4", media.MP4);
+    }
 
     return this;
   };
@@ -50,6 +60,10 @@
     } else if (ua.Android) {
       this.noSleepVideo.play();
     }
+    else
+    {
+      this.noSleepVideo.play();
+    }
   };
 
   // Disable NoSleep instance
@@ -60,6 +74,10 @@
         this.noSleepTimer = null;
       }
     } else if (ua.Android) {
+      this.noSleepVideo.pause();
+    }
+    else
+    {
       this.noSleepVideo.pause();
     }
   };
