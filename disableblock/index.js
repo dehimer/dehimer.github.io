@@ -41,7 +41,7 @@
     return this;
   };
 
-  disableScreenBlock.prototype.enable = function(duration) {
+  DisableBlock.prototype.enable = function(duration) {
     if (agent.isiOS) {
       this.disable();
       this.noSleepTimer = window.setInterval(function() {
@@ -58,7 +58,7 @@
   };
 
 
-  disableScreenBlock.prototype.disable = function() {
+  DisableBlock.prototype.disable = function() {
     if (agent.isiOS) {
       if (this.noSleepTimer) {
         window.clearInterval(this.noSleepTimer);
@@ -73,5 +73,5 @@
     }
   };
 
-  root.disableScreenBlock = disableScreenBlock;
+  root.DisableBlock = DisableBlock;
 })(this);
